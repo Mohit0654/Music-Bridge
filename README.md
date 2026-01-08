@@ -11,6 +11,7 @@ Music Bridge allows users to extract playlist data from one platform and recreat
 ## Tech Stack
 - Python
 - APIs
+- Web Development
 - VS Code
 
 ## Project Status
