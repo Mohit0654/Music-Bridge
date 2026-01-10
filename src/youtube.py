@@ -1,35 +1,18 @@
-import os
+import google_auth_oauthlib.flow
 import googleapiclient.discovery
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
 
 SCOPES = ["https://www.googleapis.com/auth/youtube"]
 
-TOKEN_FILE = "token.json"      # Will store login
-CLIENT_SECRET = "client_secret.json"
-
-
 def get_youtube_client():
-    creds = None
+    flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
+        "client_secret.json", SCOPES
+    )
+    credentials = flow.run_local_server(port=0)
 
-    # If already logged in before
-    if os.path.exists(TOKEN_FILE):
-        creds = Credentials.from_authorized_user_file(TOKEN_FILE, SCOPES)
-
-    # If no token or expired → refresh or login
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRET, SCOPES)
-            creds = flow.run_local_server(port=0)
-
-        # Save login for future
-        with open(TOKEN_FILE, "w") as token:
-            token.write(creds.to_json())
-
-    return googleapiclient.discovery.build("youtube", "v3", credentials=creds)
+    youtube = googleapiclient.discovery.build(
+        "youtube", "v3", credentials=credentials
+    )
+    return youtube
 
 
 def create_playlist(youtube, title):
