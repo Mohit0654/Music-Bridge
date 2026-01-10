@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>MusicBridge</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            background: linear-gradient(135deg, #1db954, #121212);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+
+        .container {
+            background: #181818;
+            padding: 30px;
+            width: 350px;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            font-size: 26px;
+        }
+
+        p {
+            font-size: 14px;
+            color: #b3b3b3;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #1db954;
+            border: none;
+            border-radius: 8px;
+            color: #000;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #1ed760;
+        }
+
+        .status {
+            margin-top: 15px;
+            font-size: 14px;
+            min-height: 20px;
+        }
+
+        .loading {
+            color: #f9c74f;
+        }
+
+        .success {
+            color: #90ee90;
+        }
+
+        .error {
+            color: #ff6b6b;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>🎵 MusicBridge</h1>
+    <p>Transfer playlists seamlessly between platforms</p>
+
+    <input 
+        type="text" 
+        id="playlistName" 
+        placeholder="Enter YouTube playlist name"
+        value="My Spotify Import"
+    />
+
+    <button onclick="exportPlaylist()">Export Playlist</button>
+
+    <div id="status" class="status"></div>
+</div>
+
+<script>
+    async function exportPlaylist() {
+        const status = document.getElementById("status");
+        const playlistName = document.getElementById("playlistName").value;
+
+        status.className = "status loading";
+        status.innerText = "⏳ Exporting playlist... Please wait";
+
+        try {
+            const response = await fetch("/export", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    spotify_playlist_id: "demo",
+                    playlist_name: playlistName
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                status.className = "status success";
+                status.innerText = `✅ Done! Added: ${data.added_songs}, Skipped: ${data.skipped_songs}`;
+            } else {
+                status.className = "status error";
+                status.innerText = data.error || "Something went wrong";
+            }
+        } catch (err) {
+            status.className = "status error";
+            status.innerText = "❌ Server not reachable";
+        }
+    }
+</script>
+
+</body>
+</html>
