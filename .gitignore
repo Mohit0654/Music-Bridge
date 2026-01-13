@@ -5,6 +5,7 @@ __pycache__/
 # Virtual environment
 venv/
 .env
+<<<<<<< HEAD
 
 # Secrets & tokens
 token.json
@@ -16,3 +17,6 @@ token.json
 # IDE
 .vscode/
 
+=======
+token.json
+>>>>>>> 3dc8c1489cf69dbf6180565b98cf8855653248ae
