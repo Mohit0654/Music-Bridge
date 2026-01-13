@@ -1,5 +1,18 @@
+# Python cache
 __pycache__/
 *.pyc
-client_secret.json
-src/client_secret.json
+
+# Virtual environment
+venv/
 .env
+
+# Secrets & tokens
+token.json
+*.json
+
+# OS files
+.DS_Store
+
+# IDE
+.vscode/
+
