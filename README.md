@@ -59,7 +59,7 @@ Due to Spotify developer access restrictions:
 * Flask
 * REST APIs
 * OAuth 2.0
-* HTML / JavaScript
+* HTML / CSS
 
 ---
 
