@@ -85,10 +85,10 @@ Due to Spotify developer access restrictions:
 * Full Spotify OAuth integration
 * Support for more music platforms
 * One-click cloud deployment
-
-
-
-
-
 * Mobile-friendly UI
 
+---
+
+## MVP Demo
+Demo video (Google Drive):  
+https://drive.google.com/drive/folders/1PGF80WbckmjCV1Qog3Pq2-ms2jVbt1i6
